@@ -1,53 +1,42 @@
 import {
-  Form,
-  Links,
-  Meta,
-  Scripts,
-  ScrollRestoration,
+    Links,
+    Meta,
+    Outlet,
+    Scripts,
+    ScrollRestoration,
 } from "@remix-run/react";
+import type {LinksFunction,} from "@remix-run/node";
+import appStylesHref from "~/tailwind.css?url";
+import SiderNav from "~/component/sider-nav/sider-nav";
+import Header from "~/component/header/header";
 
-export default function App() {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <div id="sidebar">
-          <h1>Remix Contacts</h1>
-          <div>
-            <Form id="search-form" role="search">
-              <input
-                id="q"
-                aria-label="Search contacts"
-                placeholder="Search"
-                type="search"
-                name="q"
-              />
-              <div id="search-spinner" aria-hidden hidden={true} />
-            </Form>
-            <Form method="post">
-              <button type="submit">New</button>
-            </Form>
-          </div>
-          <nav>
-            <ul>
-              <li>
-                <a href={`/contacts/1`}>Your Name</a>
-              </li>
-              <li>
-                <a href={`/contacts/2`}>Your Friend</a>
-              </li>
-            </ul>
-          </nav>
+export const links: LinksFunction = () => [
+    {rel: "stylesheet", href: appStylesHref},
+    { rel:"stylesheet", href: ""}
+];
+
+export  default  function App() {
+    return (
+        <html lang="en">
+        <head>
+            <meta charSet="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <Meta/>
+            <Links/><title></title>
+            <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
+        </head>
+        <body>
+        <div className={"flex "}>
+            <aside className={"w-[18%] h-screen"}><SiderNav/></aside>
+            <section className={"w-[82%] bg-gray-100 h-screen"}>
+                <Header/>
+                <Outlet/>
+            </section>
         </div>
-
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
+        <div id="portal-root"></div>
+        <ScrollRestoration/>
+        <Scripts/>
+        </body>
+        </html>
+    );
 }
